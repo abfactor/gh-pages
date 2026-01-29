@@ -1,0 +1,17 @@
+:root {
+  --content-max-width: 85%;
+}
+
+.spacer {
+    opacity: 1;
+    height: 12;
+    overflow: hidden;
+    margin: 0;
+    cursor: pointer;
+}
+
+/* 隐藏上一章和下一章按钮 */
+a.previous,
+a.next {
+    display: none !important;
+}
