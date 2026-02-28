@@ -1,0 +1,1743 @@
+<!DOCTYPE HTML>
+<html lang="zh,en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Effective modern C++</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../../favicon-e4efc987.png">
+        <link rel="stylesheet" href="../../../css/variables-8adf115d.css">
+        <link rel="stylesheet" href="../../../css/general-2459343d.css">
+        <link rel="stylesheet" href="../../../css/chrome-ae938929.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="../../../highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="../../../tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="../../../ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../../custom-e240e2d6.css">
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../../../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../../../searchindex-9d0b3ce7.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../../../toc-a220f9a0.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../../../toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="https://github.com/abfactor" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.5 215.6L23 471c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l57-57h68c49.7 0 97.9-14.4 139-41c11.1-7.2 5.5-23-7.8-23c-5.1 0-9.2-4.1-9.2-9.2c0-4.1 2.7-7.6 6.5-8.8l81-24.3c2.5-.8 4.8-2.1 6.7-4l22.4-22.4c10.1-10.1 2.9-27.3-11.3-27.3l-32.2 0c-5.1 0-9.2-4.1-9.2-9.2c0-4.1 2.7-7.6 6.5-8.8l112-33.6c4-1.2 7.4-3.9 9.3-7.7C506.4 207.6 512 184.1 512 160c0-41-16.3-80.3-45.3-109.3l-5.5-5.5C432.3 16.3 393 0 352 0s-80.3 16.3-109.3 45.3L139 149C91 197 64 262.1 64 330v55.3L253.6 195.8c6.2-6.2 16.4-6.2 22.6 0c5.4 5.4 6.1 13.6 2.2 19.8z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="effictive-modern-c"><a class="header" href="#effictive-modern-c">Effictive Modern C++</a></h1>
+<h2 id="3理解decltype"><a class="header" href="#3理解decltype">3.理解decltype</a></h2>
+<p>C++14 支持decltype(auto)，和auto一样，他会从其初始化表达式
+出发来推导类型，但是会使用decltype的规则。</p>
+<p>c++14:</p>
+<pre><code class="language-cpp">template&lt;typename Container, typename Index&gt;
+decltype(auto)
+authAndAccess(Container&amp;&amp; c, Index i)
+{
+    authenticateUser();
+    return std::forward&lt;Container&gt;(c)[i];
+}
+
+</code></pre>
+<p>c++11:</p>
+<pre><code class="language-cpp">template&lt;typename Container, typename Index&gt;
+auto
+authAndAccess(Container&amp;&amp; c, Index i)
+    -&gt; decltype(std::forward&lt;Container&gt;(c)[i])
+{
+    authenticateUser();
+    return std::forward&lt;Container&gt;(c)[i];
+}
+
+</code></pre>
+<p>使用decltype需要格外的小心：</p>
+<pre><code class="language-cpp">
+int x = 0;
+decltype(x)     // 结果是int
+decltype((x))   // 结果是int&amp;
+
+/* "(x)" 也是一个lvalue */
+
+decltype(auto) f1()
+{
+    int x = 0;
+}
+
+decltype(auto) f2()
+{
+    int x = 0;
+    ...
+    return (x); // decltype((x)) 是int&amp;， 所以f2返回int&amp;
+}
+
+
+</code></pre>
+<h2 id="4掌握查看类型推导结果的方法"><a class="header" href="#4掌握查看类型推导结果的方法">4.掌握查看类型推导结果的方法</a></h2>
+<p>Boost.TypeIndex 了解下</p>
+<h2 id="5优先使用auto"><a class="header" href="#5优先使用auto">5.优先使用auto</a></h2>
+<ul>
+<li>刀耕火种的时代：</li>
+</ul>
+<pre><code class="language-cpp">
+// 使用迭代器的结果来初始化局部变量
+template&lt;typename It&gt;
+void dwid(It b, It e)
+{
+    while (b != e) {
+        typename std::iterator_traits&lt;It&gt;::value_type
+            currValue = *b;
+    }
+}
+
+</code></pre>
+<ul>
+<li>使用auto后：</li>
+</ul>
+<pre><code class="language-cpp">template&lt;typename It&gt;
+void dwid(Itb, It e)
+{
+    while (b != e){
+        auto currValue = *b;
+    }
+}
+
+</code></pre>
+<p>告别初始化变量的烦恼：</p>
+<pre><code class="language-cpp">int x1;         // 潜在为初始化的风险
+
+auto x2;        // 编译不同过，必须有初始化物
+
+auto x3 = 0;    // 妙哉
+
+</code></pre>
+<p>auto 还可以掌握只有编译器能掌握的类型：</p>
+<pre><code class="language-cpp">// 冷的处理方法
+auto derefUPLess =
+    [](const std::unique_ptr&lt;Widget&gt;&amp; p1, const std::unique_ptr&lt;Widget&gt;&amp; p2)
+    { return *p1 &lt; *p2; }
+
+// 最冷的处理方法 in c++14
+auto derefUPLess =
+    [](auto &amp;p1, auto &amp;p2)
+    { return *p1 &lt; *p2; }
+
+</code></pre>
+<p>类型捷径问题：</p>
+<p>32位Windows中<code>std::vector&lt;int&gt;::size_type</code>与<code>unsigned</code>尺寸一样</p>
+<p>64位Windows中<code>std::vector&lt;int&gt;::size_type</code> 是64位 <code>unsigned</code> 是32位</p>
+<p>使用 <code>auto sz = v.size()</code> 可以降低代码移植成本</p>
+<pre><code class="language-cpp">std::vector&lt;int&gt; v;
+...
+unsigned sz = v.size();
+</code></pre>
+<p>规避无心之错引起的类型不匹配</p>
+<p><code>std::unordered_map</code> 的键值部分是<code>const</code>,
+方案一原本因该使用<code>const std::pair&lt;const string, int&gt;</code>.
+编译器会复制m中的每个对象用以构造一个<code>std::pair&lt;string, int&gt;</code>
+临时对象，每次循环迭代结束时，临时对象会被析构一次, 非常浪费资源。</p>
+<pre><code class="language-cpp">std::unordered_map&lt;std::string, int&gt; m;
+...
+// 方案一， 灰头土脸且引入'错误'
+for (const std::pair&lt;std::string, int&gt;&amp; p : m)
+{
+    ...
+}
+// 方案二， 使用auto化解
+for (const auto&amp; p : m)
+{
+    ...
+}
+</code></pre>
+<h2 id="6使用显式类型的初始化习惯用法"><a class="header" href="#6使用显式类型的初始化习惯用法">6.使用显式类型的初始化习惯用法</a></h2>
+<p><code>features()</code>返回的<code>std::vector&lt;bool&gt;</code> 第五个bit。
+代表的意思是： Widget 是否具有优先级，
+使用auto无法满足要求，反而会产生一个 悬垂指针，从而导致UB行为。
+<code>features(w)</code>返回了一个<code>std::vector&lt;bool&gt;</code>对象，而之后对该对象
+进行<code>operator[]</code>操作，返回的是一个<code>std::vector&lt;bool&gt;::reference</code>
+类型的对象，auto会把<code>highPriority</code>推导成该对象的类型。
+完全不可能是<code>std::vector&lt;bool&gt;</code>第五个比特的值。</p>
+<pre><code class="language-cpp">
+std::vector&lt;bool&gt; features(const Widget&amp; w);
+
+Widget w;
+...
+bool highPriority = features(w)[5];     // w具有高优先级吗？
+processWidget(w, highPriority);         // 按照优先级来处理
+
+// 简单替换
+auto highPriority = features(w)[5];     // 错误做法
+
+// 正确处理方法
+auto highPriority = static_cast&lt;bool&gt;(features(w)[5]);
+
+// 其他显式转换的管用表达方式
+double calcEpsilon();
+float ep = calcEpsilon()                    // 隐式转换，无法表达“我故意降低了函数返回值精度”
+auto ep = static_cast&lt;float&gt;(calcEpsilon()) // 显式转换，表明意图
+
+double d = 27;
+int index = d * c.size()                    // 右侧double转换成int的事实含含糊糊
+auto index = static_cast&lt;int&gt;(d * c.size()) // 这就显而易见了
+
+</code></pre>
+<h2 id="7创建对象是区分和"><a class="header" href="#7创建对象是区分和">7.创建对象是区分()和</a></h2>
+<h3 id="统一的大括号的初始化形式"><a class="header" href="#统一的大括号的初始化形式">统一的大括号的初始化形式</a></h3>
+<p>非静态成员变量的默认值可以用<code>=</code>、<code>{}</code>赋值，不能用<code>()</code>
+不可复制对象（例如：<code>std::atomic</code>对象）可以使用<code>{}</code>、<code>()</code>而不能使用<code>=</code></p>
+<p>故而使用统一的<code>{}</code>赋值是妙级了的选择???
+(<code>{}</code> 与<code>={}</code>是完全相同的复制方式)
+<em><strong>大括号的初始化方式是禁止内建内行的隐式窄化类型转化的</strong></em></p>
+<h3 id="大括号初始化形式并非万能"><a class="header" href="#大括号初始化形式并非万能">大括号初始化形式并非万能</a></h3>
+<p>C++ Most Vexing Parse</p>
+<pre><code class="language-cpp">Widget w1(10);  // 调用构造函数，传入形参10
+Widget w2();    // MVP(most vexing paser) 现身；声明了一个w2函数；
+Widget w3{};    // 调用没有形参的构造函数
+
+/* ---------------------------- */
+/*
+ * 当构造函数中没有任何一个具备
+ * std::initialzer_list 类型时
+ * 大小括号的意义没有任何区别
+ */
+/* ---------------------------- */
+
+class Widget{
+public:
+    Widget(int i, bool b);
+    Widget(int i, double d);
+    ...
+};
+
+Widget w1(10, true);
+Widget w2{10, true};
+Widget w3(10, 5.0);
+Widget w4{10, 5.0};
+
+/* ---------------------------- */
+/* 只要任意一个或者多个构造函数声明了
+ * std::initialzer_list 类型的形参
+ * 采用大括号初始化的语句会强烈地
+ * 优先选用带有std::initialzer_list
+ * 的重载版本
+ */
+/* ---------------------------- */
+
+class Widget{
+public:
+    Widget(int i, bool b);
+    Widget(int i, double d);
+    Widget(std::initialzer_list&lt;long, double&gt; il);  // 增加的构造函数
+    ...
+};
+
+Widget w1(10, true);
+
+// 调用带有std::initialzer_list的构造函数(10和true被强制转换成long double)
+Widget w2{10, true};
+
+Widget w3(10, 5.0);
+
+// 调用带有std::initialzer_list的构造函数(10和5.0被强制转换成long double)
+Widget w4{10, 5.0};
+
+/* ---------------------------- */
+/* 即使是平常会执行复制或者移动的构造函数也可能被
+ * std::initialzer_list类型的构造函数劫持：
+ */
+/* ---------------------------- */
+
+class Widget{
+public:
+    Widget(int i, bool b);
+    Widget(int i, double d);
+    Widget(std::initialzer_list&lt;long, double&gt; il);  // 增加的构造函数
+
+    operator float() const;                         // 强制转换成float类型
+    ...
+};
+
+Widget w5(w4)                                       // 复制构造函数
+
+// 使用大括号
+// w4的返回值被强制转换为float
+// 随后float又被强制转换为long double（大括号永远的神）
+Widget w6{w4}
+
+Widget w7(std::move(w4));                           // 调用移动构造函数
+
+// 调用带有std::initialzer_list的构造函数
+// 和w6理由相同
+Widget w8{std::move(w4)};
+
+/* ---------------------------- */
+/* 只有找不到任何办法把初始化函数形参转换成
+ * std::initialzer_list模板中的类型时，
+ * 编译器才会退而求其次去检查普通的重载构造函数；
+ */
+/* ---------------------------- */
+
+class Widget{
+public:
+    Widget(int i, bool b);
+    Widget(int i, double d);
+
+    // std::initialzer_list 模板的元素类型现在没有隐式强制转换了
+    Widget(std::initialzer_list&lt;std::string&gt; il);
+    ...
+};
+
+Widget w1(10, true); // 调用第一个构造函数
+Widget w2{10, true};
+Widget w3(10, 5.0);
+Widget w4{10, 5.0};
+
+</code></pre>
+<p>另一个用例：</p>
+<pre><code class="language-cpp">class Widget{
+public:
+    Widget();
+
+    Widget(std::initialzer_list&lt;std::string&gt; il);
+    ...
+};
+
+Widget w1;              // 调用默认构造函数
+Widget w2{};            // 仍然是默认构造函数
+Widget w3();            // MVP 重现江湖！变成函数声明语句了
+
+/*
+ * 想调用带有std::initialzer_list的构造函数，
+ * 并传如一个空的std::initialzer_list的话，可以这样写：
+ */
+
+Widget w4({});
+Widget w5{{}};
+
+</code></pre>
+<p><em><strong>使用模板时，使用大括号还是小括号是一个棘手的问题</strong></em></p>
+<h2 id="8优先使用nullptr-而非0null"><a class="header" href="#8优先使用nullptr-而非0null">8.优先使用nullptr, 而非0，NULL</a></h2>
+<p><em><strong>避免在整型和指针类型之间重载</strong></em></p>
+<h2 id="9优先使用别名声明而不是typedef"><a class="header" href="#9优先使用别名声明而不是typedef">9.优先使用别名声明，而不是typedef</a></h2>
+<p>STL 好</p>
+<p><code>std::unique_ptr</code>; 好</p>
+<p><code>typedef std::unique_ptr&lt;std::unordered_map&lt;std::string, std::string&gt;&gt; UPtrMapSS;</code> 不好</p>
+<p><code>using UPtrMapSS  = std::unique_ptr&lt;std::unordered_map&lt;std::string, std::string&gt;&gt;;</code> 好</p>
+<p><code>using</code>定义函数指针：</p>
+<pre><code class="language-cpp">typedef void (*FP)(int, const std::string&amp;);       // 使用typedef
+using FP = void (*)(int, const std::string&amp;);      // 使用别名声明
+
+</code></pre>
+<p>别名可以模板话，而typedef则不能：</p>
+<pre><code class="language-cpp">/* MyAllocList&lt;T&gt; 是 std::list&lt;T, MyAlloc&lt;T&gt;&gt; 的同义词； */
+
+template&lt;typename T&gt;
+using MyAllocList = std::list&lt;T, MyAllocList&gt;;
+
+MyAllocList&lt;Widget&gt; lw;
+
+
+/* typedef 几乎肯定要自己从头动手 */
+/* MyAllocList&lt;T&gt;::type 是std::list&lt;T, MyAlloc&lt;T&gt;&gt; 的同义词； */
+
+template&lt;typename T&gt;
+struct MyAllocList {
+    typedef std::list&lt;T, MyAlloc&lt;T&gt;&gt; type;
+};
+
+MyAllocList&lt;Widget&gt; lw;
+
+</code></pre>
+<p>别名模板可以让人避免写<code>::type</code>后缀，并且在模板内，
+对于内嵌<code>typedef</code>的引用经常也要求加上<code>typename</code>前缀。</p>
+<h2 id="10优先使用限定作用域的枚举而非未限定作用域的枚举"><a class="header" href="#10优先使用限定作用域的枚举而非未限定作用域的枚举">10.优先使用限定作用域的枚举，而非未限定作用域的枚举</a></h2>
+<pre><code class="language-cpp">/*
+ *  Redefinition of 'black' as different kind of symbol
+ *  [clang: redefinition_different_kind]
+ */
+
+enum Color { black, white, red };
+auto white = false;
+
+/*
+ * 由于限定作用域的枚举使用 enum class 声明的,
+ * 所以有时候他们也被成为枚举类
+ * 同时，枚举类的类型是强制性的，无法转换成整型
+ */
+
+enum class Color { black, white, red };
+auto white = false;   // correct
+
+/*
+ * 枚举类指定底层类型
+ */
+
+enum class Status: std::unit32_t        // std::uint32_t 在 &lt;cstdint&gt; 中
+enum Status: std::unit32_t              // 不限范围的枚举的前置声明，底层类型为std::uint32_t
+
+enum class Status: std::uint32_t {
+    good = 0;
+    failed = 10;
+    incomplete = 100;
+    corrupt = 200;
+    audited = 500;
+    indeterminate = 0xFFFFFFFF;
+}
+
+</code></pre>
+<h2 id="11优先使用删除函数而不是private为定义函数"><a class="header" href="#11优先使用删除函数而不是private为定义函数">11.优先使用删除函数而不是private为定义函数</a></h2>
+<pre><code class="language-cpp">/* c++98  不当的使用只能在链接阶段才能检查出来 */
+template &lt;class CharT, class traits = char_traits&lt;charT&gt; &gt;
+class basic_ios: public ios_base {
+public:
+    ...
+private:
+    basic_ios(const basic_ios&amp;);
+    basic_ios&amp; operator=(const basic_ios);
+
+}
+
+/* c++11 当客户尝试访问某个成员函数时
+   C++会首先检查其可访问行 */
+template &lt;class CharT, class traits = char_traits&lt;charT&gt; &gt;
+class basic_ios: public ios_base {
+public:
+    basic_ios(const basic_ios&amp;) = delete;
+    basic_ios&amp; operator=(const basic_ios) = delete;
+    ...
+}
+
+/* 使用删除函数阻止一些隐式转换 */
+bool isLucky(int num);                   // 原始版本
+bool isLucky(char) = delete;             // 拒绝char
+bool isLucky(bool) = delete;             // 原始版本
+bool isLucky(double) = delete;           // 拒绝double 和 float
+
+/* delete函数可以阻止不应该进行的模板具现, private函数则不行 */
+
+template&lt;typename T&gt;
+void processPointer(T* ptr);
+
+// void* 与 char* 是两类特殊的指针
+template&lt;&gt;
+void processPointer&lt;void&gt;(void*) = delete;
+
+template&lt;&gt;
+void processPointer&lt;char&gt;(char*) = delete;
+// const void*, const char* 也是可能是非法的
+template&lt;&gt;
+void processPointer&lt;const void&gt;(const void*) = delete;
+template&lt;&gt;
+void processPointer&lt;const char&gt;(const char*) = delete;
+
+/* 模板特化必须在命名空间作用域而非类作用域撰写 */
+
+// 无法实现的做法
+class Widget{
+public:
+    ...
+    template&lt;typename T&gt;
+    void processPointer(T* ptr) { ... };
+private:
+    template&lt;&gt;
+    void processPointer&lt;void&gt;(void*)     // 错误, 无法编译
+}
+
+// 使用delete函数则可以达到要求
+class Widget{
+public:
+    ...
+    template&lt;typename T&gt;
+    void processPointer(T* ptr) { ... };
+    ...
+}
+
+template&lt;&gt;
+void Widget::processPointer&lt;void&gt;(void*) = delete;
+// 仍然具有public的访问层级，但被删除了
+
+</code></pre>
+<h2 id="12为改写的函数添加override声明"><a class="header" href="#12为改写的函数添加override声明">12.为改写的函数添加override声明</a></h2>
+<p>派生类如果定义了一个函数和基类中的虚函数名称相同，
+但是形参不同，这也是合法行为。编译器会认为新定义的
+这个函数与基类原有的函数时相互独立的。这时，
+派生类的函数没有覆盖掉基类中的版本，这实际上是
+发生了错误，因为我们向覆盖掉基类中的版本。</p>
+<p>想要调试发现这种错误非常困难。
+但时c++11标准使得我们可以在派生类中使用<code>override</code>
+来说明派生类中的虚函数。这样编译器就能发现这类错误。</p>
+<pre><code class="language-cpp">struct B {
+    virtual void f1(int) const;
+    virtual void f2();
+    void f3();
+};
+
+struct C : B {
+    void f1(int) const override; // 正确：f1与基类中的f1匹配
+    void f2(int) override;       // 错误：B没有形如f2(int)的函数
+    void f3() override;          // 错误：f3不是虚函数
+    void f4() override;          // 错误： B没有名为f4的函数
+}
+</code></pre>
+<pre><code class="language-cpp">class Widget {
+public:
+    using DataType = std::vector&lt;double&gt;;
+    DataType&amp; data() &amp;        // 对于左值Widgets类型返回左值；
+    { return values; }
+    DataType data() &amp;&amp;        // 对于右值Widgets类型，返回右值；
+    { return std::move(values); }
+
+private:
+    DataType values;
+}
+
+auto vals1 = w.data();                 // vals1 采用复制构造完成初始化
+auto vals2 = makeWidget().data();      // vals2 采用移动构造完成初始化
+</code></pre>
+<h2 id="13优先使用const_iterator-而非iteratoee"><a class="header" href="#13优先使用const_iterator-而非iteratoee">13.优先使用<code>const_iterator</code>, 而非<code>iteratoee</code></a></h2>
+<p>c++14: findAndInsert:</p>
+<pre><code class="language-cpp">template&lt;typename C, typename V&gt;
+void findAndInsert(C&amp; container,
+                   const V&amp; targetVal,
+                   const V&amp; insertVal)
+{
+    using std::cbegin;
+    using std::cend;
+
+    auto it = std::find(cbegin(container),
+                        cend(container),
+                        targetVal);
+    container.insert(it, insertVal);
+}
+</code></pre>
+<p>c++11: 一个非成员函数的cbegin实现：</p>
+<pre><code class="language-cpp">template &lt;class C&gt;
+auto cbegin(const C&amp; container) -&gt; decltype(std::begin(container))
+{
+    return std::begin(container);
+}
+</code></pre>
+<h2 id="14noexcept"><a class="header" href="#14noexcept">14.noexcept</a></h2>
+<ul>
+<li>noexcept 声明是函数接口的一部分，这意味着调用方可能对它有依赖。</li>
+<li>相对与不带noexcept 声明的函数，带noexcept的函数有更多机会得到优化。</li>
+<li>noexcept 性质对于移动操作、swap、内存释放和析构函数最有价值。</li>
+<li>大多数函数都是异常中立的，不具备noexcept的性质。</li>
+</ul>
+<h2 id="15constexpr"><a class="header" href="#15constexpr">15.constexpr</a></h2>
+<pre><code class="language-cpp">// constexpr 对象
+
+int sz;                               // 非constexpr 变量
+...
+constexpr auto arraySize = sz;        // 错误！zs的值在编译期未知
+std::array&lt;int, sz&gt; data1;            // 错误！一样的原因
+constexpr auto arraySize2 = 10;       // 10 是编译期常量
+std::array&lt;int, arraySize2&gt; data2;    // arraySize2 是个 constexpr 对象
+
+int sz;
+...
+const auto arraySize = sz;            // 没问题， arraySize 是sz的一个const副本
+std::array&lt;int, arraySize&gt; data;      // 错误！ arraySize 的的值非编译期可知
+
+</code></pre>
+<h2 id="16保证const成员函数的线程安全性"><a class="header" href="#16保证const成员函数的线程安全性">16.保证const成员函数的线程安全性</a></h2>
+<ul>
+<li>保证<code>const</code>成员函数的线程安全性，除非确定他们不会出现在并发语境中；</li>
+<li>运用<code>std::atomic</code>类型会比运用互斥量提供更好的性能 ，
+但仅适用于单个变量或内粗区域的情况。</li>
+</ul>
+<pre><code class="language-cpp">class Point {
+public:
+    ...
+    double distanceFromOrigin() const noexcept
+    {
+        ++callCount;       // 带原子性的自增操作；
+        return std::sqrt((x*x) + (y * y));
+    }
+private:
+    mutable std::atomic&lt;unsigned&gt; callCount{ 0 };
+    double x, y;
+}
+
+/*
+ * 如果有两个或者更多变量或者内存区域
+ * 需要整体作为一个单位操作时，就需要动用互斥量了。
+ */
+
+calss Widget{
+public:
+    ...
+    int magicValue() const
+    {
+        std::lock_guard&lt;std::mutex&gt; guard(m);
+
+        if (cachedValid) return cachedValue;
+        else {
+            auto val1 = expensiveComputation1();
+            auto val2 = expensiveComputation2();
+            cachedValue = val1 + val2;
+            cachedValid = true;
+            return cachedValue;
+        }
+    }
+
+private:
+    mutable std::mutex m;
+    mutable int cachedValue;
+    mutable bool cachedValid{ false }
+}
+
+</code></pre>
+<h2 id="17特种成员函数的生成方式"><a class="header" href="#17特种成员函数的生成方式">17.特种成员函数的生成方式</a></h2>
+<ul>
+<li><code>Widget(Widget&amp;&amp; rhs)</code>            move constructor</li>
+<li><code>Widget&amp; operator=(Widget&amp;&amp; rhs)</code> move assignment operator</li>
+<li><code>Widget(const Widget&amp; rhs)</code>       copy constructor</li>
+<li><code>Widget&amp; operator=(Widget&amp; rhs)</code>  copy assignment operator</li>
+</ul>
+<h2 id="18stdunique_ptr"><a class="header" href="#18stdunique_ptr">18.<code>std::unique_ptr</code></a></h2>
+<p><code>std::unique_ptr</code> 可以认为默认情况下和裸指针尺寸相同,
+而且与裸指针执行了相同的指令。</p>
+<p><code>std::unique_ptr</code>是只能移动的类型, 不可复制。</p>
+<p><code>std::unique_ptr</code>以两种形式提供<code>std::unique_ptr&lt;T&gt;</code>与<code>std::unique_ptr&lt;T[]&gt;</code></p>
+<ul>
+<li>
+<p><code>std::unique_ptr&lt;T&gt;</code> 不提供索引运算符<code>operator[]</code></p>
+</li>
+<li>
+<p><code>std::unique_ptr&lt;T[]&gt;</code> 不提供deferencing运算符: <code>operator*</code>和<code>operator-&gt;</code></p>
+</li>
+</ul>
+<p><code>std::unique_ptr</code>可以方便高效的转换为<code>std::shared_ptr</code>:
+<code>std::shared_ptr&lt;investment&gt; sp = makeInvestment( arguments )</code></p>
+<p><code>std::unique_ptr</code> 应用于工厂模式：</p>
+<!-- ![Investment](.images/emc_18_Investment.png) -->
+<pre><code class="language-cpp">/* classes */
+class Investment { ... };
+
+class Stock:
+    public Investment { ... };
+
+class Bond:
+    public Investment { ... };
+
+class RealEstate:
+    public Investment { ... };
+
+/* maker */
+template&lt;typename... Ts&gt;
+std::unique_ptr&lt;investment&gt;
+makeInvestment(Ts&amp;&amp;... params);
+
+/* use maker */
+{
+    ...
+    auto pInvestment =
+        makeInvestment( arguments );
+    ...
+}               // destroy *pInvestment
+
+/* custom deleter */
+auto delInvmt = [](Investment* pInvestment)
+                {
+                    makeLogEntry(pInvestment); // write a log
+                    delete pInvestment;
+                }
+
+template &lt;typename... Ts&gt;
+std::unique_ptr&lt;Investment, decltype(delInvmt)&gt;
+makeInvestment(Ts&amp;... params)
+{
+    std::unique_ptr&lt;Investment, decltype(delInvmt)&gt;
+        pInv(nullptr, delInvmt);
+
+    if ( /* a Stock object should be created */ )
+    {
+        pInv.reset(new Stock(std::forward&lt;Ts&gt;(params)...));
+    }
+    else if ( /* a Bond object should be created */ )
+    {
+        pInv.reset(new Bond(std::forward&lt;Ts&gt;(params)...));
+    }
+    else if ( /* a RealEstate object should be created */ )
+    {
+        pInv.reset(new RealEstate(std::forward&lt;Ts&gt;(params)...));
+    }
+    return pInv;
+}
+
+/*
+ * 当使用自定义析构器时，其返回类型必须制定为std::unique_ptr的
+ * 第二个参数。本例为delInvmt的类型。
+
+ * makeInvestment首先创建了一个空的std::unique_ptr指针，
+ * 使其指涉到适当的的对象然后返回该指针。
+
+ * 将一个裸指针赋值给std::unique_ptr是被禁止的
+ * 这种隐式转换有大问题。
+ * 这就是为什上例rest来指定pInv获取使用new产生的对象的所有权。
+
+ * 自定义deleter通过一个基类的指针来删除一个派生类的对象，
+ * 因此，基类Investment必须具备一个虚析构函数。
+
+*/
+
+class Investment {
+public:
+    virtual ~Investment();
+}
+
+/* c++14 具有函数返回类型推导 */
+template&lt;typename... Ts&gt;
+auto makeInvestment(Ts&amp;&amp;... params)
+{
+    // 现在自定义析构器位于makeInvestment内部了
+    auto delInvmt = [](Investment* pInvestment)
+                    {
+                        makeLogEntry(pInvestment);
+                        delete pInvestment;
+                    }
+    std::unique_ptr&lt;Investment, decltype(delInvmt)&gt;
+        pInv(nullptr, delInvmt);
+    // 同前
+    ...
+}
+</code></pre>
+<p>使用自定义析构器之后<code>std::unique_ptr</code>的尺寸：</p>
+<ul>
+<li>
+<p>若析构器是函数指针那么尺寸会增加一到两个字长(word)</p>
+</li>
+<li>
+<p>若析构器是函数对象，则取决于该函数对象存储了多少状态，
+无状态的函数对象（例如无捕获的lambda表达式）不浪费任何尺寸。</p>
+</li>
+</ul>
+<pre><code class="language-cpp">// 无状态的lambda表达式作为自定义的析构器
+auto delInvmt1 = [](Investment* pInvestment)
+                {
+                    makeLogEntry(pInvestment);
+                    delete pInvestment;
+                }
+
+// 使用函数作为自定义析构器
+void delInvmt2(Investment* pInvestment)
+{
+    makeLogEntry(pInvestment);
+    delete pInvestment;
+}
+
+// 返回尺寸 = Investment*的尺寸 + 至少函数指针的尺寸
+template&lt;typename... Ts&gt;
+std::unique_ptr&lt;Investment, void(*)(Investment*)&gt;
+makeInvestment(Ts&amp;&amp;... params);
+</code></pre>
+<h2 id="18stdshared_ptr"><a class="header" href="#18stdshared_ptr">18.<code>std::shared_ptr</code></a></h2>
+<ul>
+<li>
+<p><code>std::shared_ptr</code>的尺寸是裸指针的两倍</p>
+<p>内部包含一个裸指针+一个指涉到该资源的引用计数器</p>
+</li>
+<li>
+<p>引用计数器的内存必须是动态分配</p>
+</li>
+<li>
+<p>引用计数器的递增和递减操作必须是原子操作</p>
+<p>原子操作一般都比非原子操作慢，所以即使是引用计数器通常
+只有一个字长，也应该假设读写他们的成本是比较高昂的。</p>
+</li>
+<li>
+<p>自定义析构器不会改变<code>std::shared_ptr</code>的尺寸:</p>
+<p>因为<code>shared_ptr</code>管理的对象有一个控制块除了包含因用计数器外
+该控制块还包含了自定义析构器的一个复制。如果指定了自定义
+内存分配气，那么控制块也会包含一份它的复制。</p>
+  <!-- ![shared_ptr](.images/emc_19_shared_ptr.png) -->
+<ol>
+<li>
+<p><code>std::make_shared</code> 总是创建一个控制块</p>
+</li>
+<li>
+<p>从具备专属所有权的指针(<code>std::unique_ptr</code>或<code>std::auto_ptr</code>)
+出发构造一个<code>std::shared_ptr</code>时，会创建一个控制块。</p>
+</li>
+<li>
+<p>当<code>std::shared_ptr</code>构造函数使用裸指针作为实参来调用时，会创建一个控制块</p>
+</li>
+</ol>
+<p><em><strong>从裸指针构造不只一个<code>std::shared_ptr</code>的话被指涉对象就会有多重控制块。</strong></em></p>
+<p><em><strong>多重控制块意味着多重引用计数，进而意味着多重析构。</strong></em></p>
+<p><em><strong>UB发动机。</strong></em></p>
+<pre><code class="language-cpp">auto pw = new Widget;                           // 裸指针
+...
+std::shared_ptr&lt;Widget&gt; spw1(pw, loggingDel);   // 第一个控制块
+...
+std::shared_ptr&lt;Widget&gt; spw2(pw, loggingDel);   // 第二个控制块
+
+/*
+   *pw 有了两个引用计数器，最终引用计数器会清零
+   而*pw会被析构两次，第二次是引发未定意行为
+*/
+</code></pre>
+<p><em><strong>应尽量避免将裸指针传递给<code>shared_ptr</code>的构造函数, 使用<code>make_shared</code></strong></em></p>
+<p><em><strong>如果必须将裸指针传递给它的构造函数，就直接传递new运算符的结果，而非裸指针变量</strong></em></p>
+<p>假设Widge有个成元函数来做这种处理:</p>
+<pre><code class="language-cpp">std::vector&lt;std::shared_ptr&lt;Widget&gt;&gt; processWidgets;
+
+class Widget {
+public:
+    ...
+    void process();
+    ...
+};
+
+
+void Widget::process()
+{
+    ...
+    processWidgets.emplace_back(this);
+}
+
+</code></pre>
+<p>这种将处理完成的Widget加入链表的做法大错特错,
+错误的地方在于this指针的使用：把一个裸指针传递
+给了一个<code>std::shared_ptr</code>容器。由此构造的<code>std::shared_ptr</code>
+将为其所指涉的Widget类型的对象(*this)创建一个新的控制块。
+已经指涉到该Widget类型的对象的成员函数外部再套了一层<code>std::shared_ptr</code>。
+未定义行为取得了彻头彻尾的胜利.</p>
+<p><code>std::shared_ptr</code>为这种情况提供了一种基础设施：<code>std::enable_shared_from_this</code></p>
+<pre><code class="language-cpp">// 奇妙递归模板模式CRTP (The Curiously Recurring Template Pattern)
+// 一个派生类的基类是用该派生类作为模板形参具现的
+class Widget: public std::enable_shared_from_this&lt;Widget&gt; {
+public:
+    ...
+    void process();
+    ...
+}
+
+void Widget::process()
+{
+    ...
+    processWidgets.emplace_back(shared_from_this());
+}
+</code></pre>
+</li>
+</ul>
+<p>自定义析构器：</p>
+<pre><code class="language-cpp">auto loggingDel = [](Widget* pw)
+                {
+                    makeLogEntry(pw);
+                    delete pw;
+                }
+
+// 析构器类型是智能指针类型的一部分
+std::unique_ptr&lt;Widget, decltype(loggingDel)&gt;
+    upw(new Widget, loggingDel);
+
+// 析构器类型不是智能指针类型的一部分
+std::shared_ptr&lt;Widget&gt;
+    spw(new Widget, loggingDel);
+
+// shared_ptr 的设计更具弹性
+auto customDeleter1 = [](Widget *pw) { ... };
+auto customDeleter2 = [](Widget *pw) { ... };
+
+std::shared_ptr&lt;Widget&gt; pw1(new Widget, customDeleter1);
+std::shared_ptr&lt;Widget&gt; pw2(new Widget, customDeleter2);
+
+// 类型相同，可以放到容器中
+std::vector&lt;std::shared_ptr&lt;Widget&gt;&gt; vpw{ pw1, pw2 };
+
+</code></pre>
+<h2 id="20stdweak_ptr"><a class="header" href="#20stdweak_ptr">20.<code>std::weak_ptr</code></a></h2>
+<p><code>std::weak_ptr</code>不能dereferencing，也不能检查是否为空。</p>
+<p><code>std::weak_ptr</code>不是一种独立的智能指针，而是<code>std::shared_ptr</code>的补充。</p>
+<p><code>std::weak_ptr</code>一般是通过<code>std::shared_ptr</code>来创建的。
+当使用<code>std::shared_ptr</code>来完成初始化<code>std::weak_ptr</code>时，
+两者就指涉到了相同的位置，
+但<code>std::weak_ptr</code>不影响所指涉的对象的引用计数器。</p>
+<pre><code class="language-cpp">auto spw = std::make_shared&lt;Widget&gt;();
+...
+/*
+   wpw和spw指涉到同一个Widget
+   引用计数器保持为1
+*/
+std::weak_ptr&lt;Widget&gt; wpw(spw);
+...
+
+/*
+   引用计数器变为0
+   Widget对象被析构
+   wpw空悬(dangles 又称为expired)
+*/
+spw = nullptr;
+
+/* 测试spw是否为空悬 */
+if (wpw.expired()) ...
+
+/* 需要一个原子操作来完成std::weak_ptr是否失效的检验
+   以及未失效的情况下提供对所指涉对象的访问。
+   这个操作可以由std::weak_ptr构造std::shared_ptr来完成
+*/
+
+std::shared_ptr&lt;Widget&gt; spw1 = wpw.lock(); // 若wpw失效，则spw1为空
+auto spw2 = wpw.lock();
+
+std::shared_ptr&lt;Widget&gt; spw3(wpw)          // 如wpw失效,抛出
+                                           // std::bad_weak_ptr 异常
+
+
+
+/*
+    带缓存的工厂模式
+*/
+
+std::shared_ptr&lt;const Widget&gt; fastLoadWidget(WidgetID id)
+{
+    static std::unordered_map&lt;WidgetID, std::weak_ptr&lt;const Widget&gt;&gt; cache;
+
+    auto objPtr = cache[id].lock(); // 如果对象不存在objPtr = nullptr
+                                    // 然后loadWidget并加入缓存
+
+    if (!objPtr) {
+        objPtr = loadWidget(id);
+        cache[id] = objPtr;
+    }
+
+    return objPtr;
+}
+
+</code></pre>
+<p>总结：</p>
+<ul>
+<li>
+<p>使用<code>std::weak_ptr</code>代替可能空悬的<code>std::shared_ptr</code></p>
+</li>
+<li>
+<p><code>std::weak_ptr</code>可能的用武之地包括缓存，观察者模式，
+以及避免<code>std::shared_ptr</code>指针环路</p>
+</li>
+</ul>
+<h2 id="21优先选用stdmake_unique和stdmake_shared而非直接使用new"><a class="header" href="#21优先选用stdmake_unique和stdmake_shared而非直接使用new">21.优先选用<code>std::make_unique</code>和<code>std::make_shared</code>,而非直接使用new</a></h2>
+<ul>
+<li>省时省力：</li>
+</ul>
+<pre><code class="language-cpp">auto upw1(std::make_unique&lt;Widget&gt;());
+std::unique_ptr&lt;Widget&gt; upw2(new Widget);
+auto spw1(std::make_shared&lt;Widget&gt;());
+std::shared_ptr&lt;Widget&gt; spw2(new Widget);
+
+</code></pre>
+<ul>
+<li>内存安全</li>
+</ul>
+<pre><code class="language-cpp">void processWidget(std::shared_ptr&lt;Widget&gt; spw, int priority);
+int computePriority();
+
+/* processWidget 按值传递，始终会构造一个widget副本
+ * (也许是故意设计成这样的) */
+
+// 潜在资源泄漏风险
+processWidget(std::shared_ptr&lt;Widget&gt;(new Widget), computePriority());
+
+/* 传递个函数的实参必须在函数调用被发起之前完成求值：
+ * 1 "new Widget" 必须完成求值，一个Widget必须先在堆上创建；
+ * 2 由"new" 产生的裸指针的托管对象"std::shared_ptr&lt;Widget&gt;"
+ *   的构造函数必须执行。
+ * 3 computePriority必须执行。
+ *
+ * 但是编译器不是必须按照上述顺序生成代码，可能生成：
+ * 1. new Widget
+ * 2. computePriority
+ * 3. std::shared_ptr&lt;Widget&gt; 构造函数
+ * 此时运行期间computePriority产生了异常，那么第一步new出来的Widget
+ * 将会泄漏。
+ */
+
+// 使用std::make_shared可以避免这些问题
+processWidget(std::make_shared&lt;Widget&gt;()， computePriority());
+
+/* 无论make::shared_ptr与computePriority那个先调用都能避免泄漏
+   1. 如果make_shared先调用，指涉widget的裸指针会在computePriority
+      调用之前安全的存储在std::shared_ptr中，若computePriority
+      出现异常，则widget对象可以被安全的析构。
+   2. 如果computePriority先调用并产生了异常，那么make_shared根本
+      不会调用。
+*/
+
+</code></pre>
+<ul>
+<li>避免多次分配内存，提升性能</li>
+</ul>
+<pre><code class="language-cpp">/* 分配了两次内存new Widget分配一次，
+   还要为与其关联的控制块分配一次。
+*/
+std::shared_ptr&lt;Widget&gt; spw(new Widget);
+
+/* 分配单块(single chunck)内存，
+   即保存Widget对象，又保存与其关联的控制块。
+*/
+
+</code></pre>
+<ul>
+<li>谨慎选择使用make系列函数的情况</li>
+</ul>
+<p>make系列函数不能使用自定义析构器:</p>
+<pre><code class="language-cpp">auto widgetDeleter = [](Widget* pw) { ... };
+
+std::unique_ptr&lt;Widget, decltype(widgetDeleter)&gt;
+ upw(new Widget, widgetDeleter);
+
+std::shared_ptr&lt;Widget&gt;(new Widget, widgetDeleter);
+</code></pre>
+<p>make系列函数会向对象的构造函数完美转发其形参:</p>
+<pre><code class="language-cpp">auto upv std::make_unique&lt;std::vector&lt;int&gt;&gt;(10, 20);
+auto spv std::make_shared&lt;std::vector&lt;int&gt;&gt;(10, 20);
+// 都会创建10个元素每个元素都是20的vector，而非{10, 20}
+
+// make系列函数能完美转发大括号初始化的能力，
+// 但不能完美转发大括号初始化物
+
+// 一种解决方案
+// 利用std::initialzer_list类型的构造函数创建std::vector
+auto initList = { 10, 20 };
+auto spv = std::make_shared&lt;std::vector&lt;int&gt;&gt;(initList);
+</code></pre>
+<p><code>std::make_unique</code>仅在上述情况出现问题</p>
+<p><code>std::make_shared</code>还有两种场景</p>
+<ol>
+<li>
+<p>自定义内存管理的类</p>
+</li>
+<li>
+<p>内存紧张的系统、非常大的对象、以及涉及指涉到相同的对象
+<code>std::shared_ptr</code>生存期更久的<code>std::weak_ptr</code></p>
+</li>
+</ol>
+<h2 id="22使用pimal习惯用法时了特殊成员函数的定义放到实现文件中"><a class="header" href="#22使用pimal习惯用法时了特殊成员函数的定义放到实现文件中">22.使用Pimal习惯用法时，了特殊成员函数的定义放到实现文件中</a></h2>
+<p>Pimal　(pointer to implementation);</p>
+<blockquote>
+<p>把类的数据成员用一个指涉到具体实现类(或结构体)的指针替代，
+而后把原来在主类中的数据成员放置到实现类中，并通过指针
+间接访问这些数据成员。</p>
+</blockquote>
+<p><code>std::unique_ptr</code>:</p>
+<pre><code class="language-cpp">class Widget {                       // 位于"widget.h"
+public:
+    Widget();
+    ~Widget();
+    Widget(Widget&amp;&amp; rhs);            // 仅能声明
+    Widget&amp; operator=(Widget&amp;&amp; rhs);
+
+    Widget(const Widget&amp; rhs);
+    Widget&amp; operator=(const Widget&amp; rhs);
+    ...
+private:
+    struct Impl;
+    std::unique_ptr&lt;Impl&gt; pImpl;
+};
+
+
+#include &lt;string&gt;                  // 位于"widget.cpp"
+
+struct Widget::Impl { ... };
+Widget Widget(): Pimal(std::make_unique&lt;Impl&gt;())
+{};
+
+Widget::~Widget() = default;
+
+Widget::Widget(Widget&amp;&amp; rhs) = default;                 // 不能写在.h文件中，会出现非非完整类型的问题
+Widget&amp; Widget::operator=(Widget&amp;&amp; rhs) = default;      // 同上
+
+Widget::Widget(const Widget&amp; rhs)
+    : pImpl(std::make_unique&lt;Impl&gt;(*rhs.pImpl))
+{}
+Widget&amp; Widget::operator=(const Widget&amp; rhs)
+{
+    *pImpl = *rhs.pImpl;
+    return *this;
+}
+
+</code></pre>
+<p><code>std::shared_ptr</code>:</p>
+<pre><code class="language-cpp">class Widget {                       // 位于"widget.h"
+public:
+    Widget();
+    ...
+
+private:
+    struct Impl;
+    std::shared_ptr&lt;Impl&gt; pImpl;
+};
+
+// 用户代码
+Widget w1;
+auto w2(std::move(w1));
+w1 = std::move(w2);
+
+</code></pre>
+<p>总结：</p>
+<ol>
+<li>
+<p>Pimpl降低类和客户和类实现者之间的依赖性，减少了构造次数。</p>
+</li>
+<li>
+<p>对于采用<code>std::unique_ptr</code>实现的pImpl指针，须在类的头文件中
+声明特种成员函数，但在实现文件中实现它们。即使默认函数实现
+有着正确的行为，也必须这样做。</p>
+</li>
+<li>
+<p>上述建议仅适用于<code>std::unique_ptr</code>, 并不适用于<code>std::shared_ptr</code></p>
+</li>
+</ol>
+<h2 id="23stdmove-和-stdforward"><a class="header" href="#23stdmove-和-stdforward">23.<code>std::move</code> 和 <code>std::forward</code></a></h2>
+<p><code>std::move</code>不移动</p>
+<p><code>std::forward</code>不转发</p>
+<p><code>std::move</code>:</p>
+<ul>
+<li>
+<p>如果想取得某个对象执行移动操作的能力，则不要将其声明成常量，
+因为针对指针常量对象执行的移动操作将一声不吭的转换成复制操作；</p>
+</li>
+<li>
+<p><code>std::move</code> 不仅不实际移动任何东西，甚至不保证经过其强制类型转换
+后的操作对象具备可移动的能力。唯一保证的时<code>std::move</code>的结果是一个右值；</p>
+</li>
+</ul>
+<pre><code class="language-cpp">/*
+   text 被声明为const string, 而强制转换的结果时一个右值const std::string,
+   经过这番折腾之后常量性质被保留下来了
+*/
+
+class Annotation {
+public:
+    explicit Annotation(const std::string text)
+        :value(std::move(text))
+    { ... }
+private:
+    std::string value;
+}
+</code></pre>
+<p><code>std::forward</code>:</p>
+<ul>
+<li>
+<p><code>std::forward</code>是有条件的强制类型转换；</p>
+</li>
+<li>
+<p>仅当传入的实参被绑定到右值时，<code>std::forward</code> 才针对该实参实施
+向右值类型的强制类型转换。</p>
+</li>
+</ul>
+<pre><code class="language-cpp">/*
+   当且仅当用来初始化param的实参(即传入logAndProcess的实参)
+   是个右值的情况下，把param强制转换成右值
+*/
+
+void process(const Widget&amp; lvalArg);
+void process(Widget&amp;&amp; rvalArg);
+
+template&lt;typename T&gt;
+void logAndProcess(T&amp;&amp; param)
+{
+    auto now = std::chrono::system_clock::now();
+    makeLogEntry("Calling 'process'", now);
+    process(std::forward&lt;T&gt;(param));
+}
+</code></pre>
+<h2 id="24区分万能引用和右值引用"><a class="header" href="#24区分万能引用和右值引用">24.区分万能引用和右值引用</a></h2>
+<pre><code class="language-cpp">
+void f(Widget&amp;&amp; param);            // rvalue reference
+
+Widget&amp;&amp; var1 = Widget();          // rvalue reference
+                                   // 不涉及类型推导，var1是一个右值引用
+
+auto&amp;&amp; var2 = var1;                // not rvalue reference
+
+template&lt;typename T&gt;
+void f(std::vector&lt;T&gt;&amp;&amp; param);    // rvalue reference
+                                   // f被调用时，类型T将被推导，但param
+std::vector&lt;int&gt; v;                // 的类型声明不是"T&amp;&amp;", 这就排除了其
+f(v);  // 报错                     // 是一个万能引用的可能性。因此param
+       // 不能给一个右值引用绑定一个左值
+
+template&lt;typename T&gt;               // not rvalue reference
+void f(T&amp;&amp; param);
+
+template&lt;typename T&gt;
+void f(const T&amp;&amp; param)            // param 是一个右值引用
+                                   // 一个const也足以剥夺T&amp;&amp;
+                                   // 成为万能引用的资格
+
+</code></pre>
+<p><em><strong><code>T&amp;&amp;</code></strong></em>:</p>
+<ol>
+<li>
+<p>理所当然: 是右值引用。它仅仅会绑定到右值，而其主要存在的理由
+在于是被出可移动对象。</p>
+</li>
+<li>
+<p>表示既可以是右值引用，亦可以表示时左值引用，二者局一。
+带有这种意义的引用在代码中形如右值引用<code>T&amp;&amp;</code>, 但时可以如
+左值引用<code>T&amp;</code> 一样运作。这种双重特性使之既可以绑定至右值，
+亦可以绑定至左值。甚至可以绑定至<code>const</code>亦或非<code>const</code>对象，
+以及<code>volatile</code>或者非<code>volatile</code>对象。
+可以绑定万事万物，故而赐名“万能引用“</p>
+</li>
+</ol>
+<p>万能引用现身于两种场景：</p>
+<ul>
+<li>
+<p>函数模板形参</p>
+</li>
+<li>
+<p>auto类型推导</p>
+</li>
+</ul>
+<p>万能引用至出现在类型推导的过程中。哪怕时“位于模板内部”
+不涉及类型推导，那就不可能是一个万能引用；
+但是具体分析时还要看调用者给定的类型的边界情况分析。</p>
+<h2 id="25针对右值引用实施stdmove针对万能引用实施stdforward"><a class="header" href="#25针对右值引用实施stdmove针对万能引用实施stdforward">25.针对右值引用实施<code>std::move</code>，针对万能引用实施<code>std::forward</code></a></h2>
+<p>右值引用：</p>
+<p>应清楚的知道右值引用绑定的对象可移动。</p>
+<pre><code class="language-cpp">class Widget {
+public:
+    Widget(Widget&amp;&amp; rhs)
+        :name(std::move(rhs.name)),
+        p(std::move(rhs.p))
+    { ... }
+    ...
+private:
+    std::string name;
+    std::shared_ptr&lt;SomeDataStructure&gt; p;
+};
+
+
+</code></pre>
+<p>万能引用：</p>
+<p>只是可能绑定到可移动的对象上，
+只有在使用右值初始化来时才会强制转换成右值引用。</p>
+<p>这正是<code>std::forward</code>的用武之地：</p>
+<pre><code class="language-cpp">class Widget {
+public:
+    template&lt;typename T&gt;
+    void setName(T&amp;&amp; newName)
+    { name = std::forward&lt;T&gt;(newName); }
+    ...
+};
+
+</code></pre>
+<p>若局部对象可能适用于返回值优化(return value optimization, RVO),
+则切勿对其实施<code>std::move</code>或<code>std::forward</code></p>
+<p>RVO的两个前提条件：</p>
+<ol>
+<li>
+<p>局部对象的类型和函数返回类型相同</p>
+</li>
+<li>
+<p>返回的就是局部对象本身</p>
+</li>
+</ol>
+<h2 id="26避免依万能引用的类型进行重载"><a class="header" href="#26避免依万能引用的类型进行重载">26.避免依万能引用的类型进行重载</a></h2>
+<ul>
+<li>
+<p>形参时万能引用的函数是c++中最贪婪的，几乎和任何实参类型精准匹配</p>
+</li>
+<li>
+<p>完美转发构造函数问题最为严重，因为对于非常量的左值类型而言，
+它们一般都会形成相对于复制构造函数更佳的匹配，
+而且它们会劫持对基类的复制和移动构造函数的调用。</p>
+</li>
+</ul>
+<pre><code class="language-cpp">class Person {
+public:
+    template&lt;typename T&gt;
+    explicit Person(T&amp;&amp; n)
+    : name(std::forward&lt;T&gt;(n)) {}
+
+    explicit Person(int idx);
+
+    // Person(const Person&amp; rhs)  复制构造函数，由编译器生成
+    // Person(Person&amp;&amp; rhs);      移动构造函数，由编译器生成
+}
+
+Person p("Nancy");
+auto p(p);
+/* 由p出发创建新的Person类型对象，无法通过编译
+   this code won’t call the copy constructor. It will call the perfect-
+   forwarding constructor. That function will then try to initialize Person’s
+   std::string data member with a Person object (p). std::string having no con‐
+   structor taking a Person */
+
+
+</code></pre>
+<h2 id="27熟悉依万能引用类型进行重载的替代方案"><a class="header" href="#27熟悉依万能引用类型进行重载的替代方案">27.熟悉依万能引用类型进行重载的替代方案</a></h2>
+<ol>
+<li>
+<p>舍弃重载</p>
+</li>
+<li>
+<p>传递<code>const T&amp;</code> 类型的形参</p>
+</li>
+<li>
+<p>传值</p>
+</li>
+<li>
+<p>标签分发</p>
+<pre><code class="language-cpp">template&lt;typename T&gt;
+void logAndAdd(T&amp;&amp; name)
+{
+    logAndAddImpl(std::forward&lt;T&gt;(name),
+                  std::is_integral&lt;typename std::remove_reference&lt;T&gt;::type&gt;());
+}
+
+template&lt;typename T&gt;
+void logAndAddImpl(T&amp;&amp; name, std::false_type)
+{
+    auto now = std::chrono::system_clock::now();
+    log(now, "logAndAdd");
+    names.emplace_back(std::forward&lt;T&gt;(name));
+}
+
+std::string nameFromIndex(int idx);
+void logAndAddImpl(int idx, std::true_type)
+{
+    logAndAdd(nameFromIndex(idx));
+}
+
+</code></pre>
+<p>标签分发发挥作用的关键在于，存在一个无需重载的函数
+作为客户端api。</p>
+</li>
+<li>
+<p>对接受万能引用的模板施加限制
+…</p>
+</li>
+</ol>
+<p>滚去搜索:</p>
+<ul>
+<li>
+<p><code>std::enable_if_t</code></p>
+</li>
+<li>
+<p><code>std::decay_t</code></p>
+</li>
+<li>
+<p>SFINAE</p>
+</li>
+</ul>
+<p>经由<code>std::enable_if</code>对模板施加限制，就可以将万能引用和重载一起使用，
+不过这种技术控制了编译器可以调用到接受万能引用的重载版本的条件。
+万能引用形参通常在性能方面具备优势，但在易用性方面一般会有劣势。</p>
+<h2 id="28理解引用折叠"><a class="header" href="#28理解引用折叠">28.理解引用折叠</a></h2>
+<p>如果引用的引用出现在允许的语境(例如：模板实例化的过程中),
+该双重引用会折叠成单个引用：</p>
+<blockquote>
+<p>如果任一引用为左值引用，结果为左值引用。
+否则(即两个引用都是右值引用)，结果为右值引用。</p>
+</blockquote>
+<p><code>std::forward</code>运作的机理:</p>
+<pre><code class="language-cpp">template&lt;typename T&gt;
+void f(T&amp;&amp; fParam)
+{
+    ...
+    someFunc(std::forward&lt;T&gt;(fParam));
+}
+
+// std::forward的一种实现：
+template&lt;T&gt;
+T&amp;&amp; forward(typename remove_reference&lt;T&gt;::type&amp; param)
+{
+    return static_cast&lt;T&amp;&amp;&gt;(param);
+}
+
+/* 加入传递给f的是左值Widget,
+   则T会被推导为Widget&amp;类型.
+   std::forward调用的实例化版本为：
+   std::forward&lt;Widget&amp;&gt; */
+
+// Widget&amp; 插入forward后产生的结果
+Widget&amp; &amp;&amp; forward(typename remove_reference&lt;Widget&amp;&gt;::type&amp; param)
+{
+    return static_cast&lt;Widget&amp; &amp;&amp;&gt;(param);
+}
+
+// remove_reference后产生的结果
+Widget&amp; &amp;&amp; forward(Widget&amp; param) { ... }
+
+// 根据引用折叠规则，最终结果
+Widget&amp; forward(Widget&amp; param)
+{
+    return static_cast&lt;Widget&amp;&gt;(param);
+}
+
+</code></pre>
+<ul>
+<li>
+<p>引用折叠会发生在四种语境中：</p>
+<ol>
+<li>
+<p>模板实例化</p>
+</li>
+<li>
+<p>auto自动推导，与模板实例化并无区别</p>
+</li>
+<li>
+<p>typedef 创建或者评估求值阶段出现引用的引用，引用折叠则会出手消灭之</p>
+</li>
+<li>
+<p>decltype</p>
+</li>
+</ol>
+</li>
+<li>
+<p>万能引用就是在类型推导过程中会区别左值和右值，
+以及会发生引用折叠的语境中的右值引用。</p>
+</li>
+</ul>
+<h2 id="29假定移动操作不存在成本高未使用"><a class="header" href="#29假定移动操作不存在成本高未使用">29.假定移动操作不存在、成本高、未使用</a></h2>
+<p><code>std::array</code>实际上带有stl接口的内建数组。</p>
+<p><code>std::string</code>，许多实现都采用了小型字符串优化
+(small string optimization, SSO)。SSO的“小型“
+字符串会存储在一个std::string对象的某个缓冲区内，
+而不去使用堆分配内存。SSO的小型字符串移动并不快于复制。</p>
+<ul>
+<li>对于移动类型或者移动语义已知的代码则无需作上述假定。</li>
+</ul>
+<h2 id="30熟悉完美转发的失败情形"><a class="header" href="#30熟悉完美转发的失败情形">30.熟悉完美转发的失败情形</a></h2>
+<pre><code class="language-cpp">template&lt;typename... Ts&gt;
+void fwd(Ts&amp;&amp;... params)
+{
+    f(std::forward&lt;Ts&gt;(params)...)
+}
+
+fwd( expression );
+f( expression );
+</code></pre>
+<p>给定目标函数f和转发函数fwd，当某特定的实参调用f
+会执行某一操作，而用同一实参调用fwd会执行不同的操作，
+则称为完美转发失败。</p>
+<ol>
+<li>
+<p>大括号初始化</p>
+<pre><code class="language-cpp">void f(const std::vector&lt;int&gt;&amp; v);
+
+f({1, 2, 3});   // 没问题，会隐式转化为std::vector&lt;int&gt;
+fwd({1, 2, 3}); // 错误，无法编译通过
+
+auto il = {1, 2, 3};  // il 推导类型为std::initialzer_list&lt;int&gt;
+fwd(il);              // 没问题， 将il完美转发给f
+</code></pre>
+<p><code>fwd({1, 2, 3})</code>问题在于向未声明为<code>std::initialzer_list</code>
+类型的函数模板传递了大括号初始化物。称之为“非推导语境”。
+通俗解释：fwd的形参未声明为<code>std::initialzer_list</code>,
+编译器就会被禁止在fwd调用过程中从表达式<code>{1, 2, 3}</code>
+出发来推导类型。</p>
+</li>
+<li>
+<p>0和NULL用作空指针</p>
+<p>0或者NULL用作空指针传递给模板
+则会推导成整型，而非指针类型。
+所以0和NULL都不能用作空指针以
+进行完美转发。可用nullptr修正。</p>
+</li>
+<li>
+<p>仅有声明的整型static const成员变量</p>
+<pre><code class="language-cpp">class Widget {
+public:
+    static const std::size_t MinVals = 28;   // 给定了MinVals的声明
+    ...
+};
+                                             // 为给定MinVals的定义
+std::vector&lt;int&gt; widgeData;
+widgeData.reserve(Widget::MinVals);          // 此处用到了MinVals
+</code></pre>
+<p>有意个普适的规定：
+不需要给出类中的static const 成员变量的定义，
+仅需要声明就行。
+编译器会根据这些成员的值进行常数传播，
+从而不必再为它们保留内存。</p>
+<p>以MinVals直接调用f没问题，编译器会直接用她的值替代参数。</p>
+<p><code>void f(Widget::MinVals)</code></p>
+<p>以MinVals由fwd来调用f就出问题了。
+对MinVals实施取地址的过程失败。</p>
+</li>
+<li>
+<p>重载函数名和模板函数名</p>
+</li>
+<li>
+<p>位域</p>
+</li>
+</ol>
+<h2 id="31避免默认捕获"><a class="header" href="#31避免默认捕获">31.避免默认捕获</a></h2>
+<p>C++有两种捕获方式：按值捕获、按引用捕获</p>
+<p>按引用的默认捕获模式可能产生空悬引用</p>
+<p>按至的默认捕获模式会忽悠你，好像可以对空悬引用免疫(其实不能)
+让你以为闭包是独立的(实际上不可能独立)</p>
+<p>按值的默认捕获极易受空悬指针的影响(尤其是this),
+并会让人们认为lambda是自恰的。</p>
+<h2 id="32使用初始化捕获将多个对象移入闭包"><a class="header" href="#32使用初始化捕获将多个对象移入闭包">32.使用初始化捕获将多个对象移入闭包</a></h2>
+<p>初始化捕获(init capture) 又成为广义lambda捕获(generalized lambda capture)</p>
+<pre><code class="language-cpp">class Widget {
+public:
+    bool isValidated() const;
+    bool isProcessed() const;
+    bool isArchived() const;
+    ...
+private:
+    ...
+}
+
+auto pw = std::make_unique&lt;Widget&gt;();
+... // 配置*pw
+auto func = [pw = std::move(pw)]
+            {
+                return pw-&gt;isValidated() &amp;&amp; pw-&gt;isArchived();
+            }
+
+// 如果经由make_unique创建的对象已具备lambda表达式捕获的合适状态
+
+auto func = [pw = std::make_unique&lt;Widget&gt;()]
+            {
+                return pw-&gt;isValidated() &amp;&amp; pw-&gt;isArchived();
+            }
+</code></pre>
+<h2 id="33对auto类型的形参使用decltypestdforward"><a class="header" href="#33对auto类型的形参使用decltypestdforward">33.对<code>auto&amp;&amp;</code>类型的形参使用<code>decltype</code>、<code>std::forward</code></a></h2>
+<p>泛型lambda表达式(generic lambda)是C++14最令人振奋人心的特性之一，
+lambda可以在形参规格中使用auto啦。这个特性的实现：
+闭包类中的operator()采用模板实现。</p>
+<p>例如:</p>
+<p><code>auto f = [](auto x){ return func(normalize(x)); }</code></p>
+<p>闭包类的函数运算符如下：</p>
+<pre><code class="language-cpp">class SomeComplierGeneratedClassName {
+public:
+    template&lt;typename T&gt;
+    auto operator()(T x) const
+    { return func(normalize(x)); }
+
+    ...
+}
+</code></pre>
+<p>本例中lambda唯一的作用就是把
+x转发给normalize。如果normalize区分
+左右值那么上例中的lambda是有问题的，
+因为它总是传递左值(形参x)</p>
+<p>解决方案：</p>
+<pre><code class="language-cpp">auto f = [](auto&amp;&amp; param)
+{ return func(normalize(std::forward&lt;decltype(param)&gt;())); }
+</code></pre>
+<h2 id="34优先使用lambda表达式而非stdbind"><a class="header" href="#34优先使用lambda表达式而非stdbind">34.优先使用lambda表达式，而非<code>std::bind</code></a></h2>
+<h2 id="35优先选用基于任务而非基于线程的程序设计"><a class="header" href="#35优先选用基于任务而非基于线程的程序设计">35.优先选用基于任务而非基于线程的程序设计</a></h2>
+<h2 id="36如果异步时必须的则指定stdlaunchasync"><a class="header" href="#36如果异步时必须的则指定stdlaunchasync">36.如果异步时必须的，则指定<code>std::launch::async</code></a></h2>
+<h2 id="37使stdthread类型对象在所有路径皆不可联结"><a class="header" href="#37使stdthread类型对象在所有路径皆不可联结">37.使<code>std::thread</code>类型对象在所有路径皆不可联结</a></h2>
+<h2 id="38对变化多端的线程句柄析构函数行为保持关注"><a class="header" href="#38对变化多端的线程句柄析构函数行为保持关注">38.对变化多端的线程句柄析构函数行为保持关注</a></h2>
+<h2 id="39考虑针对一次性事件通信使用以void为模板类型实参的期值"><a class="header" href="#39考虑针对一次性事件通信使用以void为模板类型实参的期值">39.考虑针对一次性事件通信使用以void为模板类型实参的期值</a></h2>
+<h2 id="40对并发使用stdatomic对特种内存使用volatile"><a class="header" href="#40对并发使用stdatomic对特种内存使用volatile">40.对并发使用<code>std::atomic</code>，对特种内存使用<code>volatile</code></a></h2>
+<h2 id="41针对可复制的形参在移动成本低并且一定会被复制的前提下考虑将其按值传递"><a class="header" href="#41针对可复制的形参在移动成本低并且一定会被复制的前提下考虑将其按值传递">41.针对可复制的形参，在移动成本低并且一定会被复制的前提下，考虑将其按值传递</a></h2>
+<h2 id="42考虑置入而非插入"><a class="header" href="#42考虑置入而非插入">42.考虑置入而非插入</a></h2>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../notes/lang/cpp/cpp_idioms.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../notes/lang/rust/rust.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../notes/lang/cpp/cpp_idioms.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../notes/lang/rust/rust.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
+                    </a>
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr-ef4e11c1.min.js"></script>
+        <script src="../../../mark-09e88c2c.min.js"></script>
+        <script src="../../../searcher-c2a407aa.js"></script>
+
+        <script src="../../../clipboard-1626706a.min.js"></script>
+        <script src="../../../highlight-abc7f01d.js"></script>
+        <script src="../../../book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../../custom-e6887083.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
