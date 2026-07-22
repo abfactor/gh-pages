@@ -1,0 +1,4 @@
+serve:
+    cd ../.. && mdbook serve
+build:
+    cd ../.. && mdbook build
